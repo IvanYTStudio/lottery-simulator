@@ -1,0 +1,126 @@
+.stApp  {
+    background-image: url("https://i.ibb.co/cbDxm2W/Untitled-design.png");
+    background-size: cover;
+}
+
+header[data-testid="stHeader"] {
+	background : rgba(255, 255, 255, 0);
+}
+
+label[data-testid="stWidgetLabel"] {
+    display: none;
+}
+
+.block-container {
+    padding-top: 1%;
+    padding-bottom: 1%;
+    padding-left: 3%;
+}
+
+div[data-baseweb="input"] {
+    width: 100%;
+    height: 10vh;
+    border-color: #000000;
+    /* border: 4px; */
+}
+
+input {
+    text-align: center;
+    font-size: 4vw !important;
+    border: none;
+}
+
+#subtitle {
+    font-size: xx-large;
+    text-align: center;
+}
+
+.step-down {
+    display: none;
+    width: 0px;
+    height: 0px;    
+}
+
+.step-up {
+    display: none;
+    width: 0px;
+    height: 0px;
+}
+
+#title {
+    pointer-events: none;
+}
+
+#subtitle {
+    pointer-events: none;
+}
+
+#amount_bet, #simulations_amount_bet {
+    pointer-events: none;
+    text-align: center;
+    color: red;
+    font-size: 5vw;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#amount_won, #simulations_amount_won {
+    pointer-events: none;
+    text-align: center;
+    color: rgb(47, 255, 47);
+    font-size: 5vw;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#result, #simulations_result {
+    pointer-events: none;
+    text-align: center;
+    font-size: 5vw;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#amount_descriptions {
+    pointer-events: none;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+input :disabled {
+    color: red !important;
+}
+
+button[kind="secondary"] {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100% !important;
+}
+
+button[data-testid="baseButton-secondary"] div[data-testid="stMarkdownContainer"] p {
+    font-size: 3vw !important;
+}
+
+#drawn_number {
+    pointer-events: none;
+    text-align: center;
+    font-size: 4vw;
+    border: solid black;
+    border-radius: 5%;
+}
+
+#runs_title {
+    padding: 0;
+    text-align: center;
+    pointer-events: none;
+}
+
+#placeholder {
+    padding: 0;
+    text-align: center;
+    pointer-events: none;
+    opacity: 0;
+    font-size: 1vh;
+}
+
+div[data-testid="stNumberInputContainer"] {
+    border-color: black;
+}
