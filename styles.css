@@ -99,7 +99,7 @@ button[data-testid="baseButton-secondary"] div[data-testid="stMarkdownContainer"
     font-size: 3vw !important;
 }
 
-#drawn_number {
+#drawn_number_1, #drawn_number_2, #drawn_number_3, #drawn_number_4, #drawn_number_5, #drawn_number_6, #drawn_number_7 {
     pointer-events: none;
     text-align: center;
     font-size: 4vw;

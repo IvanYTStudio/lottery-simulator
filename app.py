@@ -30,6 +30,7 @@ def draw():
         st.session_state['drawn_number_7'] = drawn_numbers[6]
         drawn_numbers = [int(num) for num in drawn_numbers]
         calculate_result(player_numbers=player_numbers, drawn_numbers=drawn_numbers)
+        color_numbers(player_numbers=player_numbers, drawn_numbers=drawn_numbers)
     sleep(0.5)
     return None
 
@@ -42,7 +43,6 @@ def calculate_result(player_numbers, drawn_numbers):
 
 def run_simulations():
     if check_numbers(player_numbers=simulation_player_numbers):
-        amount_won = 0
         for _ in range(runs):
             drawn_numbers = []
             for _ in range(7):
@@ -55,13 +55,36 @@ def run_simulations():
         st.session_state['simulations_amount_bet'] += runs * 100
     return None
 
+def color_numbers(player_numbers, drawn_numbers):
+    number_colors = ""
+    for num in drawn_numbers:
+        if num in player_numbers:
+            number_colors += f"#drawn_number_{str(drawn_numbers.index(num)+1)} {{color:green}}"
+        else:
+            number_colors += f"#drawn_number_{str(drawn_numbers.index(num)+1)} {{color:red}}"
+    st.markdown(f'<style>{number_colors}</style>', unsafe_allow_html=True)
+
+def reset():
+    st.session_state['drawn_number_1'] = 1
+    st.session_state['drawn_number_2'] = 2
+    st.session_state['drawn_number_3'] = 3
+    st.session_state['drawn_number_4'] = 4
+    st.session_state['drawn_number_5'] = 5
+    st.session_state['drawn_number_6'] = 6
+    st.session_state['drawn_number_7'] = 7
+    st.session_state['amount_bet'] = 0
+    st.session_state['amount_won'] = 0
+    st.session_state['result'] = 0
+
+def reset_simulations():
+    st.session_state['simulations_amount_bet'] = 0
+    st.session_state['simulations_amount_won'] = 0
+    st.session_state['simulations_amount_results'] = 0
+
 st.set_page_config(page_title='Lottery Simulator', page_icon='favicon.ico', layout='wide')
 
 with open('styles.css') as f:
     st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
-
-if 'money' not in st.session_state:
-    st.session_state['money'] = 0
 
 if 'drawn_number_1' not in st.session_state:
     st.session_state['drawn_number_1'] = 1
@@ -105,7 +128,6 @@ if 'simulations_amount_won' not in st.session_state:
 if 'simulations_results' not in st.session_state:
     st.session_state['simulations_results'] = 0
 
-
 if 'auto_numbers_checkbox' not in st.session_state:
     st.session_state['auto_numbers_checkbox'] = True
 
@@ -146,40 +168,43 @@ with tab1:
     col1, col2, col3, col4, col5, col6, col7, col8, col9 = st.columns(9)
 
     with col2:
-        st.title(st.session_state['drawn_number_1'], anchor='drawn_number')
+        st.title(st.session_state['drawn_number_1'], anchor='drawn_number_1')
     with col3:
-        st.title(st.session_state['drawn_number_2'], anchor='drawn_number')
+        st.title(st.session_state['drawn_number_2'], anchor='drawn_number_2')
     with col4:
-        st.title(st.session_state['drawn_number_3'], anchor='drawn_number')
+        st.title(st.session_state['drawn_number_3'], anchor='drawn_number_3')
     with col5:
-        st.title(st.session_state['drawn_number_4'], anchor='drawn_number')
+        st.title(st.session_state['drawn_number_4'], anchor='drawn_number_4')
     with col6:
-        st.title(st.session_state['drawn_number_5'], anchor='drawn_number')
+        st.title(st.session_state['drawn_number_5'], anchor='drawn_number_5')
     with col7:
-        st.title(st.session_state['drawn_number_6'], anchor='drawn_number')
+        st.title(st.session_state['drawn_number_6'], anchor='drawn_number_6')
     with col8:
-        st.title(st.session_state['drawn_number_7'], anchor='drawn_number')
+        st.title(st.session_state['drawn_number_7'], anchor='drawn_number_7')
 
     st.divider()
 
-    col1, col2, col3, col4, col5, col6 = st.columns([0.5,2,2,2,2,0.5])
+    col1, col2, col3, col4, col5, col6, col7 = st.columns([0.5,1,2,2,2,1,0.5])
 
     amount_bet = 0
     amount_won = 0
     result = amount_won - amount_bet
 
     with col2:
+        st.title('Placeholder', anchor='placeholder')
+        st.button('Reset', key='reset_button', on_click=reset)
+    with col3:
         st.title(f'{st.session_state["amount_bet"]:,}', anchor='amount_bet')
         st.subheader('Money bet', anchor='amount_descriptions')
-    with col3:
+    with col4:
         st.title(f'{st.session_state["amount_won"]:,}', anchor='amount_won')
         st.subheader('Money won', anchor='amount_descriptions')
-    with col4:
+    with col5:
         st.title(f'{st.session_state["amount_won"] - st.session_state["amount_bet"]:,}', anchor='result')
         st.subheader('Result', anchor='amount_descriptions')
-    with col5:
+    with col6:
         st.title('Placeholder', anchor='placeholder')
-        play_button = st.button('Play', key='play_button', on_click=draw)
+        st.button('Play', key='play_button', on_click=draw)
 
 with tab2:
 
@@ -242,13 +267,11 @@ with tab2:
         st.title(f'{st.session_state["simulations_amount_won"] - st.session_state["simulations_amount_bet"]:,}', anchor='simulations_result')
         st.subheader('Result', anchor='amount_descriptions')
 
-    col1, col2, col3, col4 = st.columns([0.5, 1, 1, 0.5])
+    col1, col2, col3, col4, col5 = st.columns([0.5, 1, 1, 1, 0.5])
 
     with col2:
-        # st.title('Number of runs', anchor='runs_title')
-        runs = st.number_input(label='AAAA',min_value=1, max_value=100000, label_visibility='hidden', key='simulations_runs')
+        st.button(label='Reset', key='reset_simulations', on_click=reset_simulations)
     with col3:
-        # st.title('Number of runs', anchor='placeholder')
-        # st.subheader('Number of runs', anchor='placeholder')
-        # st.subheader('Number of runs', anchor='placeholder')
+        runs = st.number_input(label='AAAA',min_value=1, max_value=100000, label_visibility='hidden', key='simulations_runs')
+    with col4:
         st.button(label='Run', key='run_simulations', on_click=run_simulations)
